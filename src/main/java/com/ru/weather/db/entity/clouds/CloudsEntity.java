@@ -1,6 +1,6 @@
 package com.ru.weather.db.entity.clouds;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
