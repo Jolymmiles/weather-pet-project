@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Wind {
-    private double speed;
-    private int deg;
+public class RainDto {
+    private double oneHour;
+    private double threeHour;
+
 }

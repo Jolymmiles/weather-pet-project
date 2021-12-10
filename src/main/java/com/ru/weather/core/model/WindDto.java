@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Clouds {
-    private int all;
+public class WindDto {
+    private double speed;
+    private int deg;
 }

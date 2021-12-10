@@ -5,7 +5,7 @@ import lombok.*;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Main {
+public class TemperatureDto {
     private double temp;
     private double feels_like;
     private double temp_min;

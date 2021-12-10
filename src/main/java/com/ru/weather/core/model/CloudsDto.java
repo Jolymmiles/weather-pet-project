@@ -7,8 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Rain {
-    private double oneHour;
-    private double threeHour;
-
+public class CloudsDto {
+    private int id;
+    private int all;
 }
