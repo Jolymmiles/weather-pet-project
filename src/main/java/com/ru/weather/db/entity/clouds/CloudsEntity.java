@@ -1,9 +1,10 @@
 package com.ru.weather.db.entity.clouds;
 
-import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 
 @Getter
@@ -14,8 +15,8 @@ import lombok.Setter;
 public class CloudsEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="clouds_seq")
-    @SequenceGenerator(name="clouds_seq", sequenceName = "clouds_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clouds_seq")
+    @SequenceGenerator(name = "clouds_seq", sequenceName = "clouds_sequence", allocationSize = 1)
     private Long id;
 
     @Column(name = "name_all")

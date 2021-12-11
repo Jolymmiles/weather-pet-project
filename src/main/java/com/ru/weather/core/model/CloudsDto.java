@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class CloudsDto {
-    private int id;
+    private long id;
     private int all;
 }

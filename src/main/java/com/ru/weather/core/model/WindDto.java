@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class WindDto {
+    private long id;
     private double speed;
     private int deg;
 }

@@ -6,10 +6,11 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 public class TemperatureDto {
+    private long id;
     private double temp;
-    private double feels_like;
-    private double temp_min;
-    private double temp_max;
+    private double feelsLike;
+    private double tempMin;
+    private double tempMax;
     private double pressure;
     private double humidity;
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class RainDto {
+    private long id;
     private double oneHour;
     private double threeHour;
 

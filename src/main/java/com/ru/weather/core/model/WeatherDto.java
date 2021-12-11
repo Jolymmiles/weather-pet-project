@@ -6,8 +6,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 public class WeatherDto {
-    private int id;
+    private long id;
     private String main;
-    private String description;
 
 }
