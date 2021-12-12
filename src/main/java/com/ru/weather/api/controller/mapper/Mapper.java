@@ -1,11 +1,12 @@
 package com.ru.weather.api.controller.mapper;
 
-import com.ru.weather.core.model.*;
-import com.ru.weather.db.entity.clouds.CloudsEntity;
-import com.ru.weather.db.entity.rain.RainEntity;
-import com.ru.weather.db.entity.temperature.TemperatureEntity;
-import com.ru.weather.db.entity.weather.WeatherEntity;
-import com.ru.weather.db.entity.wind.WindEntity;
+
+import com.ru.weather.core.service.dto.CityDto;
+import com.ru.weather.core.service.dto.FalloutAndTemperatureDto;
+import com.ru.weather.core.service.dto.WeatherDto;
+import com.ru.weather.db.entity.CityEntity;
+import com.ru.weather.db.entity.FalloutAndTemperatureEntity;
+import com.ru.weather.db.entity.WeatherEntity;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;
@@ -14,16 +15,12 @@ import org.springframework.stereotype.Component;
 public class Mapper extends ConfigurableMapper {
     @Override
     protected void configure(MapperFactory factory) {
+        factory.classMap(CityEntity.class, CityEntity.class).byDefault().register();
 
-        factory.classMap(CloudsEntity.class, CloudsDto.class).byDefault().register();
-
-        factory.classMap(RainEntity.class, RainDto.class).byDefault().register();
-
-        factory.classMap(TemperatureEntity.class, TemperatureDto.class).byDefault().register();
+        factory.classMap(FalloutAndTemperatureEntity.class, FalloutAndTemperatureDto.class).byDefault().register();
 
         factory.classMap(WeatherEntity.class, WeatherDto.class).byDefault().register();
 
-        factory.classMap(WindEntity.class, WindDto.class).byDefault().register();
     }
 
 
