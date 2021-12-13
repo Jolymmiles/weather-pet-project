@@ -14,7 +14,7 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(Temp.class, FalloutAndTemperatureDto.class).field("day", "temperature").register();
         factory.classMap(Weather.class, FalloutAndTemperatureDto.class).field("description", "fallout").register();
 
-        factory.classMap()
+
 
 
     }

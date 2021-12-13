@@ -17,9 +17,12 @@ public class AllData {
     private String timezone;
     @JsonProperty("timezone_offset")
     private Integer timezoneOffset;
-
+    @JsonProperty("currnet")
+    private Current current;
     @JsonProperty("weather")
     private Weather weather;
+    @JsonProperty("daily")
+    private Daily[] daily;
 
 
 }

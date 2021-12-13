@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-public class Daily {
+public class Current {
     @JsonProperty("dt")
     private Long dt;
     @JsonProperty("sunrise")
@@ -23,7 +23,7 @@ public class Daily {
     private Double moonPhase;
     @JsonProperty("temp")
     private Temp temp;
-    @JsonProperty("feels_Like")
+    @JsonProperty("feels_like")
     private FeelsLike feelsLike;
     @JsonProperty("pressure")
     private Long pressure;
@@ -41,8 +41,8 @@ public class Daily {
     private Weather weather;
     @JsonProperty("clouds")
     private Long clouds;
-    @JsonProperty("pop")
-    private Double pop;
     @JsonProperty("uvi")
     private Double uvi;
+    @JsonProperty("rain")
+    private Rain rain;
 }
