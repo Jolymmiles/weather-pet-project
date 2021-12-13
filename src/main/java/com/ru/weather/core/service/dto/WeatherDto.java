@@ -4,17 +4,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Setter
 @Getter
 @NoArgsConstructor
 public class WeatherDto {
     private Long id;
-    private String dateOfWeather;
+    private LocalDate dateOfWeather;
     private CityDto cityDto;
     private FalloutAndTemperatureDto falloutAndTemperatureDto;
     private Integer squeeze;
     private Integer wet;
     private String breezeRate;
-    private String dateOfGettingData;
+    private LocalDate dateOfGettingData;
 
 }

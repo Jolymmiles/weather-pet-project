@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class WeatherEntity {
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "date_of_weather")
-    private String dateOfWeather;
+    private LocalDate dateOfWeather;
     @OneToOne
     @JoinColumn(name = "city_id")
     private CityEntity cityEntity;
@@ -34,5 +35,5 @@ public class WeatherEntity {
     @Column(name = "breeze_rate")
     private String breezeRate;
     @Column(name = "date_of_getting_data")
-    private String dateOfGettingData;
+    private LocalDate dateOfGettingData;
 }
