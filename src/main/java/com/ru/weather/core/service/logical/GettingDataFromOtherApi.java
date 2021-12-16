@@ -1,17 +1,35 @@
 package com.ru.weather.core.service.logical;
 
-import com.ru.weather.core.model.openweatherapi.AllData;
+import com.google.gson.Gson;
+import com.ru.weather.core.model.openweatherapi.other.AllData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class GettingDataFromOtherApi {
     final String API_KEY_OPENWEATHER = "c7bcf64e62b56fb2bbeb904141a0c9ee";
-    private String url = "https://api.openweathermap.org/data/2.5/onecall?";
+    private Gson gson;
+    private RestTemplate restTemplate = new RestTemplate();
 
-    RestTemplate restTemplate = new RestTemplate();
-    ResponseEntity<AllData> responseEntity = restTemplate.exchange("");
+    //Получение Json-а из чужого апи по заданным параметрам
+    public AllData getJsonFromOtherApi() {
+        String responseBody = restTemplate.getForObject(buildUrl().toString(), String.class);
+        AllData allData = gson.fromJson(responseBody, AllData.class);
+        return allData;
+    }
 
-    public String makeUrl(Double lat, Double lon) {
+    //Билдер ссылки(запроса) в жучое апи
+    public UriComponents buildUrl() {
+        UriComponents uriComponents = UriComponentsBuilder.newInstance().scheme("https").host("api.openweathermap.org")
+                .path("/data/2.5/onecall")
+                .queryParam("appid", API_KEY_OPENWEATHER)
+                .queryParam("exclude", "hourly")
+                .queryParam("units", "metric")
+                .queryParam("lat", "46.39")
+                .queryParam("lon", "-47.91").buildAndExpand();
+        return uriComponents;
+
 
     }
 }
