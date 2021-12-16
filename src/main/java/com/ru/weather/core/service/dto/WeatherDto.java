@@ -1,14 +1,13 @@
 package com.ru.weather.core.service.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Setter
-@Getter
-@NoArgsConstructor
+@Data
 public class WeatherDto {
     private Long id;
     private LocalDate dateOfWeather;

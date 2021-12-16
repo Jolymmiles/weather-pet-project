@@ -1,6 +1,7 @@
 package com.ru.weather.core.service.mapper;
 
-import com.ru.weather.core.service.dto.FalloutAndTemperatureDto;
+import com.ru.weather.core.model.openweatherapi.other.AllData;
+import com.ru.weather.core.service.dto.WeatherDto;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class Mapper extends ConfigurableMapper {
     @Override
     protected void configure(MapperFactory factory) {
+        factory.classMap(WeatherDto.class, AllData.class).byDefault().register();
 
 
 
