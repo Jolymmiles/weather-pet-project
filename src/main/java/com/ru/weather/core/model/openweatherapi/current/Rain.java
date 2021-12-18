@@ -1,12 +1,12 @@
 package com.ru.weather.core.model.openweatherapi.current;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class Rain {
-    @SerializedName("1h")
+    @JsonProperty("1h")
     private Double onehour;
-    @SerializedName("3h")
+    @JsonProperty("3h")
     private Double threeHour;
 }

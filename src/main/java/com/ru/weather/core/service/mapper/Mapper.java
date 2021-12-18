@@ -10,7 +10,11 @@ import org.springframework.stereotype.Component;
 public class Mapper extends ConfigurableMapper {
     @Override
     protected void configure(MapperFactory factory) {
-        factory.classMap(WeatherDto.class, AllData.class).byDefault().register();
+        factory.classMap(AllData.class ,WeatherDto.class )
+                .field("current.weather.description", "falloutAndTemperatureDto")
+                .field("","")
+                .field("","")
+                .register();
 
 
 

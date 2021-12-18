@@ -1,17 +1,17 @@
 package com.ru.weather.core.model.openweatherapi.other;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class Weather {
-    @SerializedName("id")
+    @JsonProperty("id")
     private Integer id;
-    @SerializedName("main")
+    @JsonProperty("main")
     private String main;
-    @SerializedName("description")
+    @JsonProperty("description")
     private String description;
-    @SerializedName("icon")
+    @JsonProperty("icon")
     private String icon;
 
 }

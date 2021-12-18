@@ -4,7 +4,7 @@ package com.ru.weather.api.controller.controller;
 
 import com.ru.weather.api.controller.mapper.Mapper;
 import com.ru.weather.core.service.dto.WeatherDto;
-import com.ru.weather.db.entity.WeatherEntity;
+import com.ru.weather.db.entity.weather.WeatherEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

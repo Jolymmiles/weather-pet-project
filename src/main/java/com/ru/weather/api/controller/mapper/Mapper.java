@@ -1,12 +1,11 @@
 package com.ru.weather.api.controller.mapper;
 
 
-import com.ru.weather.core.service.dto.CityDto;
 import com.ru.weather.core.service.dto.FalloutAndTemperatureDto;
 import com.ru.weather.core.service.dto.WeatherDto;
-import com.ru.weather.db.entity.CityEntity;
-import com.ru.weather.db.entity.FalloutAndTemperatureEntity;
-import com.ru.weather.db.entity.WeatherEntity;
+import com.ru.weather.db.entity.city.CityEntity;
+import com.ru.weather.db.entity.falloutandtemperature.FalloutAndTemperatureEntity;
+import com.ru.weather.db.entity.weather.WeatherEntity;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;

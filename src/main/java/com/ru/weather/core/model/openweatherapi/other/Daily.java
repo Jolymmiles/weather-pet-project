@@ -1,50 +1,50 @@
 package com.ru.weather.core.model.openweatherapi.other;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 public class Daily {
-    @SerializedName("dt")
+    @JsonProperty("dt")
     private Long dt;
-    @SerializedName("sunrise")
+    @JsonProperty("sunrise")
     private Long sunrise;
-    @SerializedName("sunset")
+    @JsonProperty("sunset")
     private Long sunset;
-    @SerializedName("moonrise")
+    @JsonProperty("moonrise")
     private Long moonrise;
-    @SerializedName("moonset")
+    @JsonProperty("moonset")
     private Long moonset;
-    @SerializedName("moon_phase")
+    @JsonProperty("moon_phase")
     private Double moonPhase;
-    @SerializedName("temp")
+    @JsonProperty("temp")
     private Temp temp;
-    @SerializedName("feels_Like")
+    @JsonProperty("feels_Like")
     private FeelsLike feelsLike;
-    @SerializedName("pressure")
+    @JsonProperty("pressure")
     private Long pressure;
-    @SerializedName("humidity")
+    @JsonProperty("humidity")
     private Long humidity;
-    @SerializedName("dew_point")
+    @JsonProperty("dew_point")
     private Double dewPoint;
-    @SerializedName("wind_speed")
+    @JsonProperty("wind_speed")
     private Double windSpeed;
-    @SerializedName("wind_deg")
+    @JsonProperty("wind_deg")
     private Long windDeg;
-    @SerializedName("wind_gust")
+    @JsonProperty("wind_gust")
     private Double windGust;
-    @SerializedName("weather")
+    @JsonProperty("weather")
     private List<Weather> weather;
-    @SerializedName("clouds")
+    @JsonProperty("clouds")
     private Long clouds;
-    @SerializedName("pop")
+    @JsonProperty("pop")
     private Double pop;
-    @SerializedName("uvi")
+    @JsonProperty("uvi")
     private Double uvi;
-    @SerializedName("snow")
+    @JsonProperty("snow")
     private Double snow;
-    @SerializedName("rain")
+    @JsonProperty("rain")
     private Double rain;
 }

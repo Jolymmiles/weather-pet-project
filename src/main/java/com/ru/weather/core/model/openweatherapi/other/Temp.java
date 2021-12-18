@@ -1,22 +1,22 @@
 package com.ru.weather.core.model.openweatherapi.other;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 class Temp {
-    @SerializedName("temp")
+    @JsonProperty("temp")
     private Double temp;
-    @SerializedName("day")
+    @JsonProperty("day")
     private Double day;
-    @SerializedName("min")
+    @JsonProperty("min")
     private Double min;
-    @SerializedName("max")
+    @JsonProperty("max")
     private Double max;
-    @SerializedName("night")
+    @JsonProperty("night")
     private Double night;
-    @SerializedName("eve")
+    @JsonProperty("eve")
     private Double eve;
-    @SerializedName("morn")
+    @JsonProperty("morn")
     private Double morn;
 }

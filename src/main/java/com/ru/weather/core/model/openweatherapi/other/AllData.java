@@ -1,6 +1,6 @@
 package com.ru.weather.core.model.openweatherapi.other;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ru.weather.core.model.openweatherapi.current.Current;
 import lombok.Data;
 
@@ -8,17 +8,17 @@ import java.util.List;
 
 @Data
 public class AllData {
-    @SerializedName("lat")
+    @JsonProperty("lat")
     private Double lat;
-    @SerializedName("lon")
+    @JsonProperty("lon")
     private Double lon;
-    @SerializedName("timezone")
+    @JsonProperty("timezone")
     private String timezone;
-    @SerializedName("timezone_offset")
+    @JsonProperty("timezone_offset")
     private Integer timezoneOffset;
-    @SerializedName("current")
+    @JsonProperty("current")
     private Current current;
-    @SerializedName("daily")
+    @JsonProperty("daily")
     private List<Daily> daily;
 
 

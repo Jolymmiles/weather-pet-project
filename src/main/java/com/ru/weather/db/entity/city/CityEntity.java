@@ -1,4 +1,4 @@
-package com.ru.weather.db.entity;
+package com.ru.weather.db.entity.city;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

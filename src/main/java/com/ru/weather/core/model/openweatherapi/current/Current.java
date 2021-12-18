@@ -1,8 +1,7 @@
 package com.ru.weather.core.model.openweatherapi.current;
 
 
-
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ru.weather.core.model.openweatherapi.other.Weather;
 import lombok.Data;
 
@@ -11,42 +10,42 @@ import java.util.List;
 
 @Data
 public class Current {
-    @SerializedName("dt")
+    @JsonProperty("dt")
     private Long dt;
-    @SerializedName("sunrise")
+    @JsonProperty("sunrise")
     private Long sunrise;
-    @SerializedName("sunset")
+    @JsonProperty("sunset")
     private Long sunset;
-    @SerializedName("moonrise")
+    @JsonProperty("moonrise")
     private Long moonrise;
-    @SerializedName("moonset")
+    @JsonProperty("moonset")
     private Long moonset;
-    @SerializedName("moon_phase")
+    @JsonProperty("moon_phase")
     private Double moonPhase;
-    @SerializedName("temp")
+    @JsonProperty("temp")
     private Double temp;
-    @SerializedName("feels_like")
+    @JsonProperty("feels_like")
     private Double feelsLike;
-    @SerializedName("pressure")
+    @JsonProperty("pressure")
     private Long pressure;
-    @SerializedName("humidity")
+    @JsonProperty("humidity")
     private Long humidity;
-    @SerializedName("dew_point")
+    @JsonProperty("dew_point")
     private Double dewPoint;
-    @SerializedName("wind_speed")
+    @JsonProperty("wind_speed")
     private Double windSpeed;
-    @SerializedName("wind_deg")
+    @JsonProperty("wind_deg")
     private Long windDeg;
-    @SerializedName("wind_gust")
+    @JsonProperty("wind_gust")
     private Double windGust;
-    @SerializedName("weather")
+    @JsonProperty("weather")
     private List<Weather> weatherArray;
-    @SerializedName("clouds")
+    @JsonProperty("clouds")
     private Long clouds;
-    @SerializedName("uvi")
+    @JsonProperty("uvi")
     private Double uvi;
-    @SerializedName("rain")
+    @JsonProperty("rain")
     private Rain rain;
-    @SerializedName("snow")
+    @JsonProperty("snow")
     private Snow snow;
 }
