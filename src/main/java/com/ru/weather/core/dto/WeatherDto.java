@@ -1,4 +1,4 @@
-package com.ru.weather.core.service.dto;
+package com.ru.weather.core.dto;
 
 import lombok.Data;
 

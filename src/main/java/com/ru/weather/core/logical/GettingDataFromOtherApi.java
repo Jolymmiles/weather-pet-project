@@ -1,4 +1,4 @@
-package com.ru.weather.core.service.logical;
+package com.ru.weather.core.logical;
 
 import com.ru.weather.core.model.openweatherapi.other.AllData;
 import org.springframework.http.ResponseEntity;
