@@ -11,7 +11,7 @@ public class CityService {
     private CityEntityRepository cityEntityRepository;
 
     public CityEntity getByCityname(String cityname) {
-        CityEntity cityEntity = cityEntityRepository.findByCityname(cityname);
+        CityEntity cityEntity = cityEntityRepository.findByName(cityname);
         return cityEntity;
     }
 }

@@ -7,12 +7,9 @@ import java.time.LocalDate;
 @Data
 public class WeatherDto {
     private Long id;
-    private LocalDate dateOfWeather;
+    private LocalDate date;
     private CityDto cityDto;
-    private FalloutAndTemperatureDto falloutAndTemperatureDto;
-    private Integer squeeze;
-    private Integer wet;
-    private String breezeRate;
+    private Double temperature;
     private LocalDate dateOfGettingData;
 
 }

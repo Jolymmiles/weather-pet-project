@@ -4,6 +4,8 @@ import com.ru.weather.db.entity.city.CityEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.tomcat.jni.Local;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,13 +23,14 @@ public class WeatherEntity {
     @Column(name = "weather_id", nullable = false)
     private Long id;
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cityid")
+    @JoinColumn(name = "city_id")
     private CityEntity cityEntity;
     @Column(name = "temperature")
     private Double temperature;
+    @CreatedDate
     @Column(name = "date_of_getting_data")
-    private Date dateOfGettingData;
+    private LocalDate dateOfGettingData;
 
 }
