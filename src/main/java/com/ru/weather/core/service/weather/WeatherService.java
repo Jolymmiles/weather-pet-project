@@ -15,14 +15,14 @@ public interface WeatherService {
      * @param date       date of weather
      * @return WeatherEntity
      */
-    public WeatherEntity getWeatherByDate(CityEntity cityEntity, LocalDate date);
+    WeatherEntity getWeatherByDate(CityEntity cityEntity, LocalDate date);
 
     /**
      * Removing weather by id
      *
      * @param id weather id
      */
-    public void removeWeatherById(Long id);
+    void removeWeatherById(Long id);
 
     /**
      * Adding weather
@@ -30,7 +30,7 @@ public interface WeatherService {
      * @param weatherDto weather data
      * @return WeatherEntity
      */
-    public WeatherEntity addWeather(WeatherDto weatherDto);
+    WeatherEntity addWeather(WeatherDto weatherDto);
 
     /**
      * Updating weather by data with id
@@ -38,7 +38,7 @@ public interface WeatherService {
      * @param weatherDto weather data
      * @return WeatherEntity
      */
-    public WeatherEntity updateWeatherById(WeatherDto weatherDto);
+    WeatherEntity updateWeatherById(WeatherDto weatherDto);
 
     /**
      * Getting weather by id
@@ -46,5 +46,5 @@ public interface WeatherService {
      * @param id weather id
      * @return WeatherEntity
      */
-    public WeatherEntity getWeatherById(Long id);
+    WeatherEntity getWeatherById(Long id);
 }

@@ -9,32 +9,32 @@ public interface CityService {
      * @param cityname  name of the city
      * @return CityEntity
      */
-    public CityEntity getByCityname(String cityname);
+    CityEntity getByCityname(String cityname);
 
     /**
      * Removing city by id
      * @param id  city id
      */
-    public void removeCitById(Long id);
+    void removeCityById(Long id);
 
     /**
      * Adding city
      * @param cityDto  city data
      * @return CityEntity
      */
-    public CityEntity addCity(CityDto cityDto);
+    CityEntity addCity(CityDto cityDto);
 
     /**
      * Updating city by id
      * @param cityDto  city data
      * @return CityEntity
      */
-    public CityEntity updateCityById(CityDto cityDto);
+    CityEntity updateCityById(CityDto cityDto);
 
     /**
      * Getting city by id
      * @param id  city id
      * @return CityEntity
      */
-    public CityEntity getCityById(Long id);
+    CityEntity getCityById(Long id);
 }

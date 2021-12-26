@@ -21,7 +21,7 @@ public class CityServiceImpl implements CityService {
 
 
     //Стандартные запросы
-    public void removeCitById(Long id) {
+    public void removeCityById(Long id) {
         cityEntityRepository.deleteById(id);
     }
 

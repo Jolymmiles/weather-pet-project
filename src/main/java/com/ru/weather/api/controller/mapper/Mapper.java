@@ -27,31 +27,5 @@ public class Mapper extends ConfigurableMapper {
 
     }
 
-    /*
-"current": {
-		"dt": 1640411699,
-		"sunrise": 1640429633,
-		"sunset": 1640460575,
-		"temp": 0.56,
-		"feels_like": -6.44,
-		"pressure": 991,
-		"humidity": 69,
-		"dew_point": -3.95,
-		"uvi": 0,
-		"clouds": 100,
-		"visibility": 10000,
-		"wind_speed": 14.1,
-		"wind_deg": 246,
-		"wind_gust": 18.96,
-		"weather": [
-			{
-				"id": 804,
-				"main": "Clouds",
-				"description": "overcast clouds",
-				"icon": "04n"
-			}
-		]
-     */
-
 
 }
