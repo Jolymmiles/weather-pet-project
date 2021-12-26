@@ -5,9 +5,11 @@ import com.ru.weather.api.controller.mapper.Mapper;
 import com.ru.weather.core.dto.WeatherDto;
 import com.ru.weather.core.service.city.CityService;
 import com.ru.weather.core.service.weather.WeatherService;
+import com.ru.weather.core.service.weather.WeatherServiceImpl;
 import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -29,12 +31,18 @@ public class WeatherController {
 
     @RequestMapping(value = "/get/onday")
     @GetMapping
-    public @ResponseBody
-    WeatherDto getWeather(@RequestParam String city, @RequestParam(required = false) String date) {
-        LocalDate localDate = LocalDate.parse(date);
+    public @ResponseBody WeatherDto getWeather(@RequestParam String city,
+                          @RequestParam(required = false)
+                          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         CityEntity cityEntity = cityService.getByCityname(city);
-        WeatherEntity weatherEntity = weatherService.getWeatherByDate(cityEntity, localDate);
+        WeatherEntity weatherEntity = weatherService.getWeatherByDate(cityEntity, date);
         return mapper.map(weatherEntity, WeatherDto.class);
+    }
+
+    //Стандартные запросы удаления, добавления, создания по id
+    @RequestMapping(value = "/remove/")
+    @DeleteMapping
+    public void removeWeather(@RequestParam Long id){
 
     }
 

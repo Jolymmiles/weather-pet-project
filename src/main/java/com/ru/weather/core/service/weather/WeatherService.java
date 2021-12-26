@@ -1,50 +1,50 @@
 package com.ru.weather.core.service.weather;
 
-import com.ru.weather.api.controller.mapper.Mapper;
 import com.ru.weather.core.dto.WeatherDto;
-import com.ru.weather.core.logical.GettingDataFromOtherApi;
-import com.ru.weather.core.model.openweatherapi.current.Current;
-import com.ru.weather.core.model.openweatherapi.other.AllData;
 import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.weather.WeatherEntity;
-import com.ru.weather.db.entity.weather.WeatherEntityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
-@Service
-public class WeatherService {
-    @Autowired
-    private WeatherEntityRepository weatherEntityRepository;
+public interface WeatherService {
 
-    @Autowired
-    private Mapper mapper;
+    /**
+     * Getting weather data by date and city
+     *
+     * @param cityEntity city of weather
+     * @param date       date of weather
+     * @return WeatherEntity
+     */
+    public WeatherEntity getWeatherByDate(CityEntity cityEntity, LocalDate date);
 
-    @Autowired
-    private GettingDataFromOtherApi gettingDataFromOtherApi;
+    /**
+     * Removing weather by id
+     *
+     * @param id weather id
+     */
+    public void removeWeatherById(Long id);
 
-    public WeatherEntity getWeatherByDate(CityEntity cityEntity, LocalDate date) {
-        WeatherEntity weatherEntity = weatherEntityRepository.findByCityEntityAndDate(cityEntity, date);
-        if (weatherEntity != null) {
-            return weatherEntity;
-        } else {
-            Instant something = date.atStartOfDay(ZoneId.systemDefault()).toInstant();
-            Long unixTime = something.toEpochMilli();
-            AllData allData = gettingDataFromOtherApi.getJsonFromOtherApi(cityEntity.getLatitude(), cityEntity.getLongitude(), unixTime);
-            Current today = allData.getCurrent();
-            WeatherDto weatherDto = mapper.map(today, WeatherDto.class);
-            WeatherEntity weatherToDataBase = mapper.map(weatherDto, WeatherEntity.class);
-            weatherToDataBase.setCityEntity(cityEntity);
-            weatherToDataBase.setDate(date);
-            WeatherEntity entityToReturn = weatherEntityRepository.save(weatherToDataBase);
-            return entityToReturn;
-        }
-    }
+    /**
+     * Adding weather
+     *
+     * @param weatherDto weather data
+     * @return WeatherEntity
+     */
+    public WeatherEntity addWeather(WeatherDto weatherDto);
 
+    /**
+     * Updating weather by data with id
+     *
+     * @param weatherDto weather data
+     * @return WeatherEntity
+     */
+    public WeatherEntity updateWeatherById(WeatherDto weatherDto);
 
+    /**
+     * Getting weather by id
+     *
+     * @param id weather id
+     * @return WeatherEntity
+     */
+    public WeatherEntity getWeatherById(Long id);
 }
-
-

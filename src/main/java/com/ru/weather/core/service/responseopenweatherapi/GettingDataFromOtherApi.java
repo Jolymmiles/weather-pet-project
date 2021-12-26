@@ -1,4 +1,4 @@
-package com.ru.weather.core.logical;
+package com.ru.weather.core.service.responseopenweatherapi;
 
 import com.ru.weather.core.model.openweatherapi.other.AllData;
 import org.springframework.stereotype.Component;
@@ -30,8 +30,6 @@ public class GettingDataFromOtherApi {
                 .queryParam("lat", lat)
                 .queryParam("lon", lon).buildAndExpand();
         return uriComponents;
-
-
     }
 
     public UriComponents buildUrl(Double lat, Double lon, Long unixTime) {
@@ -44,7 +42,5 @@ public class GettingDataFromOtherApi {
                 .queryParam("lat", lat)
                 .queryParam("lon", lon).buildAndExpand();
         return uriComponents;
-
-
     }
 }
