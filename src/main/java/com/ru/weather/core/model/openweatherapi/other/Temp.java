@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-class Temp {
+public class Temp {
     @JsonProperty("temp")
     private Double temp;
     @JsonProperty("day")

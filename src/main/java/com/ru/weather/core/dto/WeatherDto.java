@@ -10,6 +10,7 @@ public class WeatherDto {
     private LocalDate date;
     private CityDto cityDto;
     private Double temperature;
+    private String weatherCondition;
     private LocalDate dateOfGettingData;
 
 }

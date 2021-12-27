@@ -15,7 +15,7 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private Mapper mapper;
 
-    public CityEntity getByCityname(String cityname) {
+    public CityEntity getByCityName(String cityname) {
         return cityEntityRepository.findByName(cityname);
     }
 
@@ -40,4 +40,6 @@ public class CityServiceImpl implements CityService {
     public CityEntity getCityById(Long id) {
         return cityEntityRepository.getById(id);
     }
+
+
 }

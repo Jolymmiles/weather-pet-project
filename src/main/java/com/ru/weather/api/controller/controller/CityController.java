@@ -17,7 +17,7 @@ public class CityController {
     private CityService cityService;
 
     //Стандартные запросы удаления, добавления, создания по id
-    @RequestMapping(value = "/remove/")
+    @RequestMapping(value = "/remove")
     @DeleteMapping
     public void removeWeather(@RequestParam Long id) {
         cityService.removeCityById(id);
@@ -29,13 +29,13 @@ public class CityController {
         return mapper.map(cityService.updateCityById(cityDto), CityDto.class);
     }
 
-    @RequestMapping(value = "add")
+    @RequestMapping(value = "/add")
     @PostMapping
     public CityDto addCity(@RequestBody CityDto cityDto) {
         return mapper.map(cityService.addCity(cityDto), CityDto.class);
     }
 
-    @RequestMapping(value = "get")
+    @RequestMapping(value = "/get")
     @GetMapping
     public CityDto getCityById(@RequestParam Long id) {
         return mapper.map(cityService.getCityById(id), CityDto.class);

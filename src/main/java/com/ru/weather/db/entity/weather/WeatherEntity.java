@@ -27,6 +27,8 @@ public class WeatherEntity {
     private CityEntity cityEntity;
     @Column(name = "temperature")
     private Double temperature;
+    @Column(name = "weather_condition")
+    private String weatherCondition;
     @CreatedDate
     @Column(name = "date_of_getting_data")
     private LocalDate dateOfGettingData;

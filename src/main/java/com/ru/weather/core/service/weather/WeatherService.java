@@ -4,7 +4,7 @@ import com.ru.weather.core.dto.WeatherDto;
 import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public interface WeatherService {
 
@@ -12,10 +12,17 @@ public interface WeatherService {
      * Getting weather data by date and city
      *
      * @param cityEntity city of weather
-     * @param date       date of weather
      * @return WeatherEntity
      */
-    WeatherEntity getWeatherByDate(CityEntity cityEntity, LocalDate date);
+    WeatherEntity getWeatherByNow(CityEntity cityEntity);
+
+    /**
+     * Getting weekly weather
+     *
+     * @param cityEntity city of weather
+     * @return List WeatherEntity
+     */
+    List<WeatherEntity> getWeeklyWeather(CityEntity cityEntity);
 
     /**
      * Removing weather by id
@@ -47,4 +54,12 @@ public interface WeatherService {
      * @return WeatherEntity
      */
     WeatherEntity getWeatherById(Long id);
+
+    /**
+     * Getting all weather to the city
+     *
+     * @param cityEntity city of weather
+     * @return List WeatherEntity
+     */
+    List<WeatherEntity> getAllCachedWeatherForThisCity(CityEntity cityEntity);
 }
