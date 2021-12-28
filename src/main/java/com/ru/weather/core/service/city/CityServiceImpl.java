@@ -7,6 +7,8 @@ import com.ru.weather.db.entity.city.CityEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CityServiceImpl implements CityService {
     @Autowired
@@ -19,6 +21,14 @@ public class CityServiceImpl implements CityService {
         return cityEntityRepository.findByName(cityname);
     }
 
+    public List<CityEntity> getAllCity(){
+        return cityEntityRepository.findAll();
+    }
+
+    public List<CityEntity> getCityWithThisLetters(String letters) {
+        return cityEntityRepository.findByNameContains(letters);
+    }
+
 
     //Стандартные запросы
     public void removeCityById(Long id) {
@@ -26,14 +36,18 @@ public class CityServiceImpl implements CityService {
     }
 
     public CityEntity addCity(CityDto cityDto) {
-        return cityEntityRepository.save(mapper.map(cityDto, CityEntity.class));
+        CityEntity check = getByCityName(cityDto.getName());
+        if (check != null){
+            return check;
+        } else {
+            return cityEntityRepository.save(mapper.map(cityDto, CityEntity.class));
+        }
     }
 
-    public CityEntity updateCityById(CityDto cityDto) {
-        if (cityDto.getId() != null) {
-            return cityEntityRepository.save(mapper.map(cityDto, CityEntity.class));
-        } else
-            return null;
+    public CityEntity updateCityById(Long id, CityEntity cityEntity) {
+            cityEntity.setId(id);
+            return cityEntityRepository.save(cityEntity);
+
 
     }
 

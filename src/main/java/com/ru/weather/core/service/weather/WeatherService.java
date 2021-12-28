@@ -3,6 +3,7 @@ package com.ru.weather.core.service.weather;
 import com.ru.weather.core.dto.WeatherDto;
 import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.weather.WeatherEntity;
+import com.sun.istack.NotNull;
 
 import java.util.List;
 
@@ -11,25 +12,39 @@ public interface WeatherService {
     /**
      * Getting weather data by date and city
      *
-     * @param cityEntity city of weather
+     * @param id city id of weather
      * @return WeatherEntity
      */
-    WeatherEntity getWeatherByNow(CityEntity cityEntity);
+    WeatherEntity getWeatherByNow(@NotNull Long id);
 
     /**
      * Getting weekly weather
      *
-     * @param cityEntity city of weather
+     * @param id city id of weather
      * @return List WeatherEntity
      */
-    List<WeatherEntity> getWeeklyWeather(CityEntity cityEntity);
+    List<WeatherEntity> getWeeklyWeather(@NotNull Long id);
+
+    /**
+     * Getting all weather to the city
+     *
+     * @param id city id of weather
+     * @return List WeatherEntity
+     */
+    List<WeatherEntity> getAllCachedWeatherForThisCity(@NotNull Long id);
+
+    /**
+     *
+     * @return List of WeatherEntity
+     */
+    public List<WeatherEntity> getAllWeather();
 
     /**
      * Removing weather by id
      *
      * @param id weather id
      */
-    void removeWeatherById(Long id);
+    void removeWeatherById(@NotNull Long id);
 
     /**
      * Adding weather
@@ -42,10 +57,10 @@ public interface WeatherService {
     /**
      * Updating weather by data with id
      *
-     * @param weatherDto weather data
+     * @param weatherEntity weather data
      * @return WeatherEntity
      */
-    WeatherEntity updateWeatherById(WeatherDto weatherDto);
+    WeatherEntity updateWeatherById(@NotNull Long id, WeatherEntity weatherEntity);
 
     /**
      * Getting weather by id
@@ -53,13 +68,7 @@ public interface WeatherService {
      * @param id weather id
      * @return WeatherEntity
      */
-    WeatherEntity getWeatherById(Long id);
+    WeatherEntity getWeatherById(@NotNull Long id);
 
-    /**
-     * Getting all weather to the city
-     *
-     * @param cityEntity city of weather
-     * @return List WeatherEntity
-     */
-    List<WeatherEntity> getAllCachedWeatherForThisCity(CityEntity cityEntity);
+
 }

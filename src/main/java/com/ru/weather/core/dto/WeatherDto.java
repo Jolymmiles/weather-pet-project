@@ -12,5 +12,6 @@ public class WeatherDto {
     private Double temperature;
     private String weatherCondition;
     private LocalDate dateOfGettingData;
+    private String icon;
 
 }

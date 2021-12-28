@@ -32,5 +32,7 @@ public class WeatherEntity {
     @CreatedDate
     @Column(name = "date_of_getting_data")
     private LocalDate dateOfGettingData;
+    @Column(name = "icon")
+    private String icon;
 
 }

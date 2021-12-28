@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface WeatherEntityRepository extends JpaRepository<WeatherEntity, Long> {
-    //WeatherEntity findByCityname(String cityname);
+
 
     WeatherEntity findByCityEntityAndDate(CityEntity cityEntity, LocalDate date);
 

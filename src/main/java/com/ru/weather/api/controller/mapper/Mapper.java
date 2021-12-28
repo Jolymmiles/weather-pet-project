@@ -24,12 +24,16 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(Current.class, WeatherDto.class)
                 .field("temp", "temperature")
                 .field("weatherArray[0].description", "weatherCondition")
+                .field("weatherArray[0].icon", "icon")
                 .register();
 
         factory.classMap(Daily.class, WeatherDto.class)
                 .field("temp.day", "temperature")
                 .field("weather[0].description", "weatherCondition")
+                .field("weather[0].icon", "icon")
                 .register();
+
+
 
 
     }

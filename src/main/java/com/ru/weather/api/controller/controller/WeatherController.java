@@ -3,9 +3,7 @@ package com.ru.weather.api.controller.controller;
 
 import com.ru.weather.api.controller.mapper.Mapper;
 import com.ru.weather.core.dto.WeatherDto;
-import com.ru.weather.core.service.city.CityService;
 import com.ru.weather.core.service.weather.WeatherService;
-import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,47 +21,57 @@ public class WeatherController {
     @Autowired
     WeatherService weatherService;
 
-    @Autowired
-    CityService cityService;
 
-
-    @RequestMapping(value = "/today")
+    @RequestMapping(value = "/{id}/today")
     @GetMapping
-    public @ResponseBody
-    WeatherDto getWeather(@RequestParam String city) {
-        CityEntity cityEntity = cityService.getByCityName(city);
-        WeatherEntity weatherEntity = weatherService.getWeatherByNow(cityEntity);
+    @ResponseBody
+    public
+    WeatherDto getWeather(@PathVariable Long id) {
+        WeatherEntity weatherEntity = weatherService.getWeatherByNow(id);
         return mapper.map(weatherEntity, WeatherDto.class);
     }
 
-    @RequestMapping(value = "/weekly")
+    @RequestMapping(value = "/{id}/weekly")
     @GetMapping
-    public @ResponseBody
-    List<WeatherDto> getWeeklyWeather(@RequestParam String city) {
-        CityEntity cityEntity = cityService.getByCityName(city);
-        return mapper.mapAsList(weatherService.getWeeklyWeather(cityEntity), WeatherDto.class);
+    @ResponseBody
+    public
+    List<WeatherDto> getWeeklyWeather(@PathVariable Long id) {
+        return mapper.mapAsList(weatherService.getWeeklyWeather(id), WeatherDto.class);
     }
 
-    @RequestMapping(value = "/all")
+    @RequestMapping(value = "/{id}/all_weather_by_city_id")
     @GetMapping
-    public @ResponseBody
-    List<WeatherDto> getAllWeatherForCity(@RequestParam String city) {
-        CityEntity cityEntity = cityService.getByCityName(city);
-        List<WeatherEntity> weatherEntities = weatherService.getAllCachedWeatherForThisCity(cityEntity);
+    @ResponseBody
+    public
+    List<WeatherDto> getAllWeatherForCity(@PathVariable Long id) {
+        List<WeatherEntity> weatherEntities = weatherService.getAllCachedWeatherForThisCity(id);
         return mapper.mapAsList(weatherEntities, WeatherDto.class);
     }
 
+    @RequestMapping(value = "")
+    @GetMapping
+    @ResponseBody
+    public List<WeatherDto> getAllWeather(@RequestParam(value = "id", required = false) Long id) {
+        if (id == null) {
+            return mapper.mapAsList(weatherService.getAllWeather(), WeatherDto.class);
+        } else {
+            return mapper.mapAsList(weatherService.getAllCachedWeatherForThisCity(id), WeatherDto.class);
+        }
+
+    }
+
     //Стандартные запросы удаления, добавления, создания по id
-    @RequestMapping(value = "/remove")
+    @RequestMapping(value = "/{id}/remove")
     @DeleteMapping
-    public void removeWeather(@RequestParam Long id) {
+    public void removeWeather(@PathVariable Long id) {
         weatherService.removeWeatherById(id);
     }
 
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "/{id}/update")
     @PutMapping
-    public WeatherDto updateWeatherById(@RequestBody WeatherDto weatherDto) {
-        return mapper.map(weatherService.updateWeatherById(weatherDto), WeatherDto.class);
+    public WeatherDto updateWeatherById(@PathVariable Long id, @RequestBody WeatherDto weatherDto) {
+        WeatherEntity weatherToService = mapper.map(weatherDto, WeatherEntity.class);
+        return mapper.map(weatherService.updateWeatherById(id, weatherToService), WeatherDto.class);
     }
 
     @RequestMapping(value = "/add")
@@ -72,9 +80,9 @@ public class WeatherController {
         return mapper.map(weatherService.addWeather(weatherDto), WeatherDto.class);
     }
 
-    @RequestMapping(value = "/get")
+    @RequestMapping(value = "/{id}/get")
     @GetMapping
-    public WeatherDto getWeatherById(@RequestParam Long id) {
+    public WeatherDto getWeatherById(@PathVariable Long id) {
         return mapper.map(weatherService.getWeatherById(id), WeatherDto.class);
     }
 
