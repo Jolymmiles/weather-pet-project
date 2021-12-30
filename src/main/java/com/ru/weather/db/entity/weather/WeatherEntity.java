@@ -20,8 +20,8 @@ public class WeatherEntity {
     @SequenceGenerator(name = "weather_seq", sequenceName = "weather_sequence", allocationSize = 1)
     @Column(name = "weather_id", nullable = false)
     private Long id;
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "date_of_weather")
+    private LocalDate dateOfWeather;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")
     private CityEntity cityEntity;

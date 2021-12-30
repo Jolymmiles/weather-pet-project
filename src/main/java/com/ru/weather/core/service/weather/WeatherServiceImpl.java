@@ -41,7 +41,7 @@ public class WeatherServiceImpl implements WeatherService {
     public WeatherEntity getWeatherByNow(Long id) {
         CityEntity cityEntity = cityEntityRepository.getById(id);
         LocalDate date = LocalDate.now();
-        WeatherEntity weatherEntity = weatherEntityRepository.findByCityEntityAndDate(cityEntity, date);
+        WeatherEntity weatherEntity = weatherEntityRepository.findByCityEntityAndDateOfWeather(cityEntity, date);
         if (!java.util.Objects.isNull(weatherEntity)) {
             return weatherEntity;
         } else {
@@ -56,7 +56,7 @@ public class WeatherServiceImpl implements WeatherService {
 
             WeatherEntity weatherToDataBase = mapper.map(weatherDto, WeatherEntity.class);
             weatherToDataBase.setCityEntity(cityEntity);
-            weatherToDataBase.setDate(Instant.ofEpochSecond(today.getDt()).atZone(ZoneId.systemDefault()).toLocalDate());
+            weatherToDataBase.setDateOfWeather(Instant.ofEpochSecond(today.getDt()).atZone(ZoneId.systemDefault()).toLocalDate());
             return weatherEntityRepository.save(weatherToDataBase);
         }
     }
@@ -75,7 +75,7 @@ public class WeatherServiceImpl implements WeatherService {
         LocalDate localDate = LocalDate.now();
         List<WeatherEntity> weatherEntityList = new ArrayList<>();
         for (int i = 1; i < 8; i++) {
-            WeatherEntity weatherEntityToList = weatherEntityRepository.findByCityEntityAndDate(cityEntity, localDate);
+            WeatherEntity weatherEntityToList = weatherEntityRepository.findByCityEntityAndDateOfWeather(cityEntity, localDate);
             localDate = localDate.plusDays(i);
             if (!Objects.isNull(weatherEntityToList)) {
                 weatherEntityList.add(weatherEntityToList);
@@ -93,13 +93,13 @@ public class WeatherServiceImpl implements WeatherService {
                 buffer.insert(33 ,weatherDto.getIcon());
                 weatherDto.setIcon(buffer.toString());
                 LocalDate date = Instant.ofEpochSecond(oneDay.getDt()).atZone(ZoneId.systemDefault()).toLocalDate();
-                if (weatherEntityRepository.findByCityEntityAndDate(cityEntity, date) == null) {
-                    weatherDto.setDate(date);
+                if (weatherEntityRepository.findByCityEntityAndDateOfWeather(cityEntity, date) == null) {
+                    weatherDto.setDateOfWeather(date);
                     WeatherEntity weatherEntityToDataBase = mapper.map(weatherDto, WeatherEntity.class);
                     weatherEntityToDataBase.setCityEntity(cityEntity);
                     weatherEntities.add(weatherEntityRepository.save(weatherEntityToDataBase));
                 } else {
-                    weatherEntities.add(weatherEntityRepository.findByCityEntityAndDate(cityEntity, date));
+                    weatherEntities.add(weatherEntityRepository.findByCityEntityAndDateOfWeather(cityEntity, date));
                 }
 
             }

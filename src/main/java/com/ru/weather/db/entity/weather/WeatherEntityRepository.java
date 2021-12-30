@@ -9,7 +9,7 @@ import java.util.List;
 public interface WeatherEntityRepository extends JpaRepository<WeatherEntity, Long> {
 
 
-    WeatherEntity findByCityEntityAndDate(CityEntity cityEntity, LocalDate date);
+    WeatherEntity findByCityEntityAndDateOfWeather(CityEntity cityEntity, LocalDate date);
 
     List<WeatherEntity> findAllByCityEntity(CityEntity cityEntity);
 }

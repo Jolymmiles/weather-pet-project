@@ -1,7 +1,6 @@
 package com.ru.weather.core.service.weather;
 
 import com.ru.weather.core.dto.WeatherDto;
-import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import com.sun.istack.NotNull;
 
@@ -34,7 +33,6 @@ public interface WeatherService {
     List<WeatherEntity> getAllCachedWeatherForThisCity(@NotNull Long id);
 
     /**
-     *
      * @return List of WeatherEntity
      */
     public List<WeatherEntity> getAllWeather();

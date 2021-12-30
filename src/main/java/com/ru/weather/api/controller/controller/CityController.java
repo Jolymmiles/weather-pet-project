@@ -4,6 +4,7 @@ import com.ru.weather.api.controller.mapper.Mapper;
 import com.ru.weather.core.dto.CityDto;
 import com.ru.weather.core.service.city.CityService;
 import com.ru.weather.db.entity.city.CityEntity;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,37 +21,43 @@ public class CityController {
     private CityService cityService;
 
     //Стандартные запросы удаления, добавления, создания по id
-    @RequestMapping(value = "/{id}/remove")
+    @ApiOperation(value = "Удаление города по Id")
+    @RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
     @DeleteMapping
     public void removeWeather(@PathVariable Long id) {
         cityService.removeCityById(id);
     }
 
-    @RequestMapping(value = "/{id}/update")
+    @ApiOperation(value = "Обновление города по Id")
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
     @PutMapping
     public CityDto updateCityById(@PathVariable Long id, @RequestBody CityDto cityDto) {
         CityEntity cityEntityToController = mapper.map(cityDto, CityEntity.class);
         return mapper.map(cityService.updateCityById(id, cityEntityToController), CityDto.class);
     }
 
-    @RequestMapping(value = "/add")
+    @ApiOperation(value = "Добавление города")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @PostMapping
     public CityDto addCity(@RequestBody CityDto cityDto) {
         return mapper.map(cityService.addCity(cityDto), CityDto.class);
     }
 
-    @RequestMapping(value = "/{id}/get")
+    @ApiOperation(value = "Получение города по Id")
+    @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)
     @GetMapping
     @ResponseBody
     public CityDto getCityById(@PathVariable Long id) {
         return mapper.map(cityService.getCityById(id), CityDto.class);
     }
 
-    @RequestMapping(value = "")
+
+    @ApiOperation(value = "Получение всех городов, включающих буквы или же без фильтра по наименованию")
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @GetMapping
     @ResponseBody
     public List<CityDto> getAllCity(@RequestParam(value = "letters", required = false) String letters) {
-        if (letters.isEmpty()) {
+        if (letters == null) {
             return mapper.mapAsList(cityService.getAllCity(), CityDto.class);
         } else {
             return mapper.mapAsList(cityService.getCityWithThisLetters(letters), CityDto.class);
