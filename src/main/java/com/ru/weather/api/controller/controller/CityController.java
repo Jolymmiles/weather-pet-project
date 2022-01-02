@@ -5,6 +5,8 @@ import com.ru.weather.core.dto.CityDto;
 import com.ru.weather.core.service.city.CityService;
 import com.ru.weather.db.entity.city.CityEntity;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/city")
 public class CityController {
+    Logger logger = LoggerFactory.getLogger("Логгер контролера городов");
 
     @Autowired
     private Mapper mapper;
@@ -25,6 +28,7 @@ public class CityController {
     @RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
     @DeleteMapping
     public void removeWeather(@PathVariable Long id) {
+        logger.info("Обращение к /{}/remove", id);
         cityService.removeCityById(id);
     }
 
@@ -32,6 +36,7 @@ public class CityController {
     @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
     @PutMapping
     public CityDto updateCityById(@PathVariable Long id, @RequestBody CityDto cityDto) {
+        logger.info("Обращение к /{}/update", id);
         CityEntity cityEntityToController = mapper.map(cityDto, CityEntity.class);
         return mapper.map(cityService.updateCityById(id, cityEntityToController), CityDto.class);
     }
@@ -40,6 +45,7 @@ public class CityController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @PostMapping
     public CityDto addCity(@RequestBody CityDto cityDto) {
+        logger.info("Обращение к /add");
         return mapper.map(cityService.addCity(cityDto), CityDto.class);
     }
 
@@ -48,6 +54,7 @@ public class CityController {
     @GetMapping
     @ResponseBody
     public CityDto getCityById(@PathVariable Long id) {
+        logger.info("Обращение к /{}/get", id);
         return mapper.map(cityService.getCityById(id), CityDto.class);
     }
 
@@ -57,6 +64,7 @@ public class CityController {
     @GetMapping
     @ResponseBody
     public List<CityDto> getAllCity(@RequestParam(value = "letters", required = false) String letters) {
+        logger.info("Обращение к /city?letters={}", letters);
         if (letters == null) {
             return mapper.mapAsList(cityService.getAllCity(), CityDto.class);
         } else {

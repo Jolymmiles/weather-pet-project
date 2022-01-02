@@ -12,4 +12,6 @@ public interface WeatherEntityRepository extends JpaRepository<WeatherEntity, Lo
     WeatherEntity findByCityEntityAndDateOfWeather(CityEntity cityEntity, LocalDate date);
 
     List<WeatherEntity> findAllByCityEntity(CityEntity cityEntity);
+
+    List<WeatherEntity> findByCityEntity_NameContains(String letters);
 }

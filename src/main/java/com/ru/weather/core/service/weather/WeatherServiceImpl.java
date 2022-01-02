@@ -11,13 +11,27 @@ import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.city.CityEntityRepository;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import com.ru.weather.db.entity.weather.WeatherEntityRepository;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +39,8 @@ import java.util.Objects;
 public class WeatherServiceImpl implements WeatherService {
     @Autowired
     private WeatherEntityRepository weatherEntityRepository;
+
+    Logger logger = LoggerFactory.getLogger("Логгер сервиса погоды");
 
     @Autowired
     private Mapper mapper;
@@ -111,6 +127,105 @@ public class WeatherServiceImpl implements WeatherService {
         CityEntity cityEntity = cityEntityRepository.getById(id);
         return weatherEntityRepository.findAllByCityEntity(cityEntity);
     }
+
+    public List<WeatherEntity> getAllWeatherWithContainsLetter(String letters){
+        return weatherEntityRepository.findByCityEntity_NameContains(letters);
+    }
+
+    public ResponseEntity<InputStreamResource> getExcelFileForWeatherToday(Long id) throws FileNotFoundException {
+        WeatherEntity weatherEntity = getWeatherByNow(id);
+        makeExcelFile(weatherEntity, "Today_Weather");
+        logger.info("Создание Excel файла");
+        File file = new File("src/TempFiles/Today_Weather.xlsx");
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", String.format("attachment; filename=%s", file.getName()));
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.setContentType(
+                MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+
+        ResponseEntity<InputStreamResource> responseEntity = ResponseEntity.ok().headers(headers).contentLength(file.length()).body(resource);
+        return responseEntity;
+    }
+
+    public ResponseEntity<InputStreamResource> getExcelWeeklyWeather(Long id) throws FileNotFoundException {
+        List<WeatherEntity> weatherEntities = getWeeklyWeather(id);
+        makeExcelFile(weatherEntities, "WeeklyWeather");
+        File file = new File("src/TempFiles/WeeklyWeather.xlsx");
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", String.format("attachment; filename=%s", file.getName()));
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.setContentType(
+                MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+
+        ResponseEntity<InputStreamResource> responseEntity = ResponseEntity.ok().headers(headers).contentLength(file.length()).body(resource);
+        return responseEntity;
+
+
+
+    }
+
+    private void makeExcelFile(List<WeatherEntity> weatherEntities, String fileName){
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Таблица 1");
+        Row row = sheet.createRow(0);
+        row.createCell(0).setCellValue("Id записи");
+        row.createCell(1).setCellValue("Дата погоды");
+        row.createCell(2).setCellValue("Город");
+        row.createCell(3).setCellValue("Температура");
+        row.createCell(4).setCellValue("Состояние");
+        row.createCell(5).setCellValue("Ссылка на иконку");
+        for (int rowNumber = 1; rowNumber < weatherEntities.size(); rowNumber++){
+            Row otherRow = sheet.createRow(rowNumber);
+            Integer normalCount = rowNumber -1;
+            otherRow.createCell(0).setCellValue(weatherEntities.get(normalCount).getId());
+            otherRow.createCell(1).setCellValue(weatherEntities.get(normalCount).getDateOfWeather().toString());
+            otherRow.createCell(2).setCellValue(weatherEntities.get(normalCount).getCityEntity().getName());
+            otherRow.createCell(3).setCellValue(weatherEntities.get(normalCount).getTemperature());
+            otherRow.createCell(4).setCellValue(weatherEntities.get(normalCount).getWeatherCondition());
+            otherRow.createCell(5).setCellValue(weatherEntities.get(normalCount).getIcon());
+        }
+        try (OutputStream fileOut = new FileOutputStream(String.format("src/TempFiles/%s.xlsx", fileName))) {
+            workbook.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void makeExcelFile(WeatherEntity weatherEntity, String fileName){
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Таблица 1");
+        Row row = sheet.createRow(0);
+        row.createCell(0).setCellValue("Id записи");
+        row.createCell(1).setCellValue("Дата погоды");
+        row.createCell(2).setCellValue("Город");
+        row.createCell(3).setCellValue("Температура");
+        row.createCell(4).setCellValue("Состояние");
+        row.createCell(5).setCellValue("Ссылка на иконку");
+        Row row2 = sheet.createRow(1);
+        row2.createCell(0).setCellValue(weatherEntity.getId());
+        row2.createCell(1).setCellValue(weatherEntity.getDateOfWeather());
+        row2.createCell(2).setCellValue(weatherEntity.getCityEntity().getName());
+        row2.createCell(3).setCellValue(weatherEntity.getTemperature());
+        row2.createCell(4).setCellValue(weatherEntity.getWeatherCondition());
+        row2.createCell(5).setCellValue(weatherEntity.getIcon());
+        try (OutputStream fileOut = new FileOutputStream(String.format("src/TempFiles/%s.xlsx", fileName))) {
+            workbook.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
 
     //Стандартные запросы
     public void removeWeatherById(Long id) {

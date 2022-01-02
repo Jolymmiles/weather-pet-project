@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 public class WeatherDto {
-    @ApiModelProperty("id записи")
+    @ApiModelProperty("Id записи")
     private Long id;
     @ApiModelProperty("Дата погоды")
     private LocalDate dateOfWeather;

@@ -3,7 +3,10 @@ package com.ru.weather.core.service.weather;
 import com.ru.weather.core.dto.WeatherDto;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import com.sun.istack.NotNull;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface WeatherService {
@@ -23,6 +26,31 @@ public interface WeatherService {
      * @return List WeatherEntity
      */
     List<WeatherEntity> getWeeklyWeather(@NotNull Long id);
+
+    /**
+     * Getting all weather with included letters
+     *
+     * @param letters letter for search
+     * @return List WeatherEntity
+     */
+    public List<WeatherEntity> getAllWeatherWithContainsLetter(String letters);
+
+    /**
+     * Get excel file for today weather
+     *
+     * @param id id
+     * @return link
+     */
+    ResponseEntity<InputStreamResource> getExcelFileForWeatherToday(Long id) throws FileNotFoundException;
+
+    /**
+     * Getting excel for weekly weather
+     *
+     * @param id city id
+     * @return excel
+     * @throws FileNotFoundException
+     */
+    ResponseEntity<InputStreamResource> getExcelWeeklyWeather(Long id) throws FileNotFoundException;
 
     /**
      * Getting all weather to the city
