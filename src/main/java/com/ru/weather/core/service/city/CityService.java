@@ -3,6 +3,7 @@ package com.ru.weather.core.service.city;
 import com.ru.weather.core.dto.CityDto;
 import com.ru.weather.db.entity.city.CityEntity;
 import com.sun.istack.NotNull;
+import javassist.NotFoundException;
 
 import java.util.List;
 
@@ -24,10 +25,10 @@ public interface CityService {
 
     /**
      * Getting city
-     * @param letters letter
+     * @param cityNameLike letter
      * @return List of CityEntity
      */
-     List<CityEntity> getCityWithThisLetters(String letters);
+     List<CityEntity> getCityWithThisLetters(String cityNameLike);
 
     /**
      * Removing city by id
@@ -39,10 +40,10 @@ public interface CityService {
     /**
      * Adding city
      *
-     * @param cityDto city data
+     * @param cityEntity city data
      * @return CityEntity
      */
-    CityEntity addCity(CityDto cityDto);
+    CityEntity addCity(CityEntity cityEntity) throws NotFoundException;
 
     /**
      * Updating city by id

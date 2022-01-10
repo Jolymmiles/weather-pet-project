@@ -4,7 +4,9 @@ import com.ru.weather.api.controller.mapper.Mapper;
 import com.ru.weather.core.dto.CityDto;
 import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.city.CityEntityRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,21 +28,22 @@ public class CityServiceImpl implements CityService {
     }
 
     public List<CityEntity> getCityWithThisLetters(String letters) {
+        if (letters == null){
+            return cityEntityRepository.findAll();
+        }
         return cityEntityRepository.findByNameContains(letters);
     }
 
-
-    //Стандартные запросы
     public void removeCityById(Long id) {
         cityEntityRepository.deleteById(id);
     }
 
-    public CityEntity addCity(CityDto cityDto) {
-        CityEntity check = getByCityName(cityDto.getName());
+    public CityEntity addCity(CityEntity cityEntity) throws NotFoundException {
+        CityEntity check = getByCityName(cityEntity.getName());
         if (check != null){
-            return check;
+            throw new NotFoundException("Уже существует");
         } else {
-            return cityEntityRepository.save(mapper.map(cityDto, CityEntity.class));
+            return cityEntityRepository.save(cityEntity);
         }
     }
 

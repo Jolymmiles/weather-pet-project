@@ -2,7 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.5.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'org.flywaydb.flyway' version '8.3.0'
+	id 'org.flywaydb.flyway' version '8.4.0'
 
 }
 
@@ -28,7 +28,7 @@ dependencies {
 	implementation 'ma.glasnost.orika:orika-core:1.5.4'
 	implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-	implementation 'org.jetbrains:annotations:20.1.0'
+	implementation 'org.jetbrains:annotations:22.0.0'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -36,8 +36,10 @@ dependencies {
 	compileOnly group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.17.1'
 	compileOnly group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.17.1'
 	implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-	implementation 'org.apache.poi:poi:5.0.0'
-	implementation 'org.apache.poi:poi-ooxml:5.0.0'
+	implementation ('org.jxls:jxls:2.11.0')
+	implementation ('org.jxls:jxls-jexcel:1.0.9')
+	implementation('org.jxls:jxls-poi:2.11.0')
+	implementation('org.jxls:jxls-reader:2.0.6')
 
 
 }
@@ -47,7 +49,6 @@ flyway{
 	user = 'postgres'
 	password = '1111'
 	schemas = 'public'
-	baselineOnMigrate = true
 }
 
 test {

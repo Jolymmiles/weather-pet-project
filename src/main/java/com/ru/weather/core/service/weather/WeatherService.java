@@ -7,6 +7,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public interface WeatherService {
@@ -41,7 +42,7 @@ public interface WeatherService {
      * @param id id
      * @return link
      */
-    ResponseEntity<InputStreamResource> getExcelFileForWeatherToday(Long id) throws FileNotFoundException;
+    ResponseEntity<InputStreamResource> getExcelFileForWeatherToday(Long id) throws IOException;
 
     /**
      * Getting excel for weekly weather
@@ -50,7 +51,7 @@ public interface WeatherService {
      * @return excel
      * @throws FileNotFoundException
      */
-    ResponseEntity<InputStreamResource> getExcelWeeklyWeather(Long id) throws FileNotFoundException;
+    ResponseEntity<InputStreamResource> getExcelWeeklyWeather(Long id) throws IOException;
 
     /**
      * Getting all weather to the city
@@ -75,10 +76,10 @@ public interface WeatherService {
     /**
      * Adding weather
      *
-     * @param weatherDto weather data
+     * @param weatherEntity weather data
      * @return WeatherEntity
      */
-    WeatherEntity addWeather(WeatherDto weatherDto);
+    WeatherEntity addWeather(WeatherEntity weatherEntity);
 
     /**
      * Updating weather by data with id

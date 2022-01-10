@@ -1,5 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/weather_api_database
-    username: user
-    password: pass
+    username: postgres
+    password: 1111
+  jpa:
+    show-sql: true
+

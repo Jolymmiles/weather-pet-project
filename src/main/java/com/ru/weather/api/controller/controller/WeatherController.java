@@ -6,16 +6,18 @@ import com.ru.weather.core.dto.WeatherDto;
 import com.ru.weather.core.service.weather.WeatherService;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -34,30 +36,25 @@ public class WeatherController {
 
 
     @ApiOperation(value = "Получение погода на сегодня по Id города")
-    @RequestMapping(value = "/{id}/today", method = RequestMethod.GET)
-    @GetMapping
-    @ResponseBody
-    public WeatherDto getWeather(@PathVariable Long id) {
+    @GetMapping("/cities/{id}/today")
+    public WeatherDto getWeather(@ApiParam(value = "Id города", required = true) @PathVariable Long id) {
         logger.info("Обращение к /{}/today", id);
         WeatherEntity weatherEntity = weatherService.getWeatherByNow(id);
         return mapper.map(weatherEntity, WeatherDto.class);
     }
 
     @ApiOperation(value = "Получение погоды на неделю по Id города")
-    @RequestMapping(value = "/{id}/weekly", method = RequestMethod.GET)
-    @GetMapping
-    @ResponseBody
-    public List<WeatherDto> getWeeklyWeather(@PathVariable Long id) {
+    @GetMapping("/{id}/weekly")
+    public List<WeatherDto> getWeeklyWeather(@ApiParam(value = "Id города", required = true) @PathVariable Long id) {
         logger.info("Образение к /{}/weekly", id);
         return mapper.mapAsList(weatherService.getWeeklyWeather(id), WeatherDto.class);
     }
 
-    @ApiOperation(value = "Получение всей кэшированное погоды по Id города, стандартный метод возвращает всю кэшированную погоду, фильтр оп наименованию")
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    @GetMapping
-    @ResponseBody
-    public List<WeatherDto> getAllWeather(@RequestParam(value = "id", required = false) Long id, @RequestParam(value = "letters", required = false) String letters) {
-        logger.info("обращение к /weather?id={}&letters={}", id, letters);
+    @ApiOperation(value = "Получение всей кэшированное погоды по Id города, стандартный метод возвращает всю кэшированную погоду, фильтр по наименованию")
+    @GetMapping("")
+    public List<WeatherDto> getAllWeather(@ApiParam(value = "Id города", required = true) @RequestParam(value = "id", required = false) Long id,
+                                          @ApiParam(value = "Фильтр по наименованию") @RequestParam(value = "cityNameLike", required = false) String letters) {
+        logger.info("обращение к /weather?id={}&cityNameLike={}", id, letters);
         if (id == null) {
             return mapper.mapAsList(weatherService.getAllWeather(), WeatherDto.class);
         } else if (!letters.isEmpty()) {
@@ -67,53 +64,61 @@ public class WeatherController {
         }
     }
 
-    @GetMapping
-    @ResponseBody
-    @RequestMapping(value =  "/today/excel/{id}")
-    public ResponseEntity<InputStreamResource> getTodayWeatherExcel(@PathVariable Long id) throws FileNotFoundException {
+
+
+    @ApiOperation(value = "Получение Excel файла погоды на день")
+    @GetMapping("/today/excel/{id}")
+    public ResponseEntity<InputStreamResource> getTodayWeatherExcel(@ApiParam(value = "Id города", required = true) @PathVariable Long id) throws IOException {
         logger.info("Обращение к /today/excel/{}", id);
         return weatherService.getExcelFileForWeatherToday(id);
-
     }
 
-    @GetMapping
-    @ResponseBody
-    @RequestMapping(value =  "/weekly/excel/{id}")
-    public ResponseEntity<InputStreamResource> getWeeklyWeatherExcel(@PathVariable Long id) throws FileNotFoundException {
+
+
+    @ApiOperation(value = "Получение Excel файла погоды на неделю")
+    @GetMapping("/weekly/excel/{id}")
+    public ResponseEntity<InputStreamResource> getWeeklyWeatherExcel(@ApiParam(value = "Id города", required = true) @PathVariable Long id) throws IOException {
         logger.info("Обращение к /weekly/excel/{}", id);
+
+
+
+
+
+
+
+
+
+
+
+
         return weatherService.getExcelWeeklyWeather(id);
     }
 
-    //Стандартные запросы удаления, добавления, создания по id
+
     @ApiOperation(value = "Удаление погоды по Id")
-    @RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
-    @DeleteMapping
-    public void removeWeather(@PathVariable Long id) {
+    @DeleteMapping("/{id}/remove")
+    public void removeWeather(@ApiParam(value = "Id погоды", required = true) @PathVariable Long id) {
         logger.info("Удаление погоды по id /{}/remove", id);
         weatherService.removeWeatherById(id);
     }
 
     @ApiOperation(value = "Обновление погоды по Id")
-    @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
-    @PutMapping
-    public WeatherDto updateWeatherById(@PathVariable Long id, @RequestBody WeatherDto weatherDto) {
+    @PutMapping("/{id}/update")
+    public WeatherDto updateWeatherById(@ApiParam(value = "Id погоды", required = true) @PathVariable Long id, @RequestBody WeatherDto weatherDto) {
         logger.info("Обновление погоды по id /{}/remove", id);
-        WeatherEntity weatherToService = mapper.map(weatherDto, WeatherEntity.class);
-        return mapper.map(weatherService.updateWeatherById(id, weatherToService), WeatherDto.class);
+        return mapper.map(weatherService.updateWeatherById(id, mapper.map(weatherDto, WeatherEntity.class)), WeatherDto.class);
     }
 
     @ApiOperation(value = "Добавление погоды")
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @PostMapping
+    @PostMapping("/add")
     public WeatherDto addWeather(@RequestBody WeatherDto weatherDto) {
         logger.info("Добавление погоды /add");
-        return mapper.map(weatherService.addWeather(weatherDto), WeatherDto.class);
+        return mapper.map(weatherService.addWeather(mapper.map(weatherDto, WeatherEntity.class)), WeatherDto.class);
     }
 
     @ApiOperation(value = "Получение погоды по Id")
-    @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)
-    @GetMapping
-    public WeatherDto getWeatherById(@PathVariable Long id) {
+    @GetMapping("/{id}/get")
+    public WeatherDto getWeatherById(@ApiParam(value = "Id погоды", required = true) @PathVariable Long id) {
         logger.info("Получение погоды по id /{}/remove", id);
         return mapper.map(weatherService.getWeatherById(id), WeatherDto.class);
     }
