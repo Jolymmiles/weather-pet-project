@@ -31,11 +31,9 @@ import java.util.Objects;
 
 @Service
 public class WeatherServiceImpl implements WeatherService {
+    Logger logger = LoggerFactory.getLogger("Логгер сервиса погоды");
     @Autowired
     private WeatherEntityRepository weatherEntityRepository;
-
-    Logger logger = LoggerFactory.getLogger("Логгер сервиса погоды");
-
     @Autowired
     private Mapper mapper;
 
@@ -108,15 +106,10 @@ public class WeatherServiceImpl implements WeatherService {
                 } else {
                     weatherEntities.add(weatherEntityRepository.findByCityEntityAndDateOfWeather(cityEntity, date));
                 }
-
             }
+            weatherEntities.remove(weatherEntities.size()-1);
             return weatherEntities;
         }
-    }
-
-    public List<WeatherEntity> getAllWeatherForCity(Long id) {
-        CityEntity cityEntity = cityEntityRepository.getById(id);
-        return weatherEntityRepository.findAllByCityEntity(cityEntity);
     }
 
     public List<WeatherEntity> getAllWeatherWithContainsLetter(String letters) {

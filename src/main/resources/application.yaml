@@ -4,5 +4,7 @@ spring:
     username: postgres
     password: 1111
   jpa:
-    show-sql: false
+    database-platform: org.hibirnate.dialect.PostgresSQLDialect
+    hibernate:
+      ddl-auto: create
 

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/city/{id}")
+@RequestMapping("api/city")
 public class CityController {
     Logger logger = LoggerFactory.getLogger("Логгер контролера городов");
 
@@ -53,7 +53,7 @@ public class CityController {
     }
 
     @ApiOperation(value = "Получение города по Id")
-    @GetMapping("/get")
+    @GetMapping("/{id}/get")
     public CityDto getCityById(@ApiParam(value = "Id города", required = true) @PathVariable Long id) {
         logger.info("Обращение к /{}/get", id);
         return mapper.map(cityService.getCityById(id), CityDto.class);

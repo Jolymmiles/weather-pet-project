@@ -1,6 +1,5 @@
 package com.ru.weather.core.service.city;
 
-import com.ru.weather.core.dto.CityDto;
 import com.ru.weather.db.entity.city.CityEntity;
 import com.sun.istack.NotNull;
 import javassist.NotFoundException;
@@ -17,18 +16,19 @@ public interface CityService {
     CityEntity getByCityName(String cityName);
 
     /**
-     *
      * Getting all city in db
+     *
      * @return List of CityEntity
      */
     List<CityEntity> getAllCity();
 
     /**
      * Getting city
+     *
      * @param cityNameLike letter
      * @return List of CityEntity
      */
-     List<CityEntity> getCityWithThisLetters(String cityNameLike);
+    List<CityEntity> getCityWithThisLetters(String cityNameLike);
 
     /**
      * Removing city by id

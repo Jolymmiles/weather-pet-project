@@ -1,4 +1,4 @@
-package com.ru.weather;
+package com.ru.weather.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class ApplicationConfiguration {
     @Bean
-    public Docket weatherApi(){
+    public Docket weatherApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ru.weather.api")).build()
@@ -20,7 +20,7 @@ public class ApplicationConfiguration {
     }
 
 
-    private ApiInfo apiInfo(){
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Weather")
                 .description("Сервис кэширования погоды")
@@ -30,7 +30,6 @@ public class ApplicationConfiguration {
                 .version(getClass().getPackage().getImplementationVersion())
                 .build();
     }
-
 
 
 }

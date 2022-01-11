@@ -11,12 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -52,18 +49,15 @@ public class WeatherController {
 
     @ApiOperation(value = "Получение всей кэшированное погоды по Id города, стандартный метод возвращает всю кэшированную погоду, фильтр по наименованию")
     @GetMapping("")
-    public List<WeatherDto> getAllWeather(@ApiParam(value = "Id города", required = true) @RequestParam(value = "id", required = false) Long id,
-                                          @ApiParam(value = "Фильтр по наименованию") @RequestParam(value = "cityNameLike", required = false) String letters) {
-        logger.info("обращение к /weather?id={}&cityNameLike={}", id, letters);
-        if (id == null) {
-            return mapper.mapAsList(weatherService.getAllWeather(), WeatherDto.class);
-        } else if (!letters.isEmpty()) {
-            return mapper.mapAsList(weatherService.getAllWeatherWithContainsLetter(letters), WeatherDto.class);
-        } else {
+    public List<WeatherDto> getAllWeather(@ApiParam(value = "Id города", required = true) @RequestParam(value = "id") Long id,
+                                          @ApiParam(value = "Фильтр по наименованию") @RequestParam(value = "cityNameLike", required = false) String cityNameLike) {
+        logger.info("обращение к /?id={}&cityNameLike={}", id, cityNameLike);
+        if (cityNameLike == null) {
             return mapper.mapAsList(weatherService.getAllCachedWeatherForThisCity(id), WeatherDto.class);
         }
-    }
+        return mapper.mapAsList(weatherService.getAllWeatherWithContainsLetter(cityNameLike), WeatherDto.class);
 
+    }
 
 
     @ApiOperation(value = "Получение Excel файла погоды на день")
@@ -74,23 +68,10 @@ public class WeatherController {
     }
 
 
-
     @ApiOperation(value = "Получение Excel файла погоды на неделю")
     @GetMapping("/weekly/excel/{id}")
     public ResponseEntity<InputStreamResource> getWeeklyWeatherExcel(@ApiParam(value = "Id города", required = true) @PathVariable Long id) throws IOException {
         logger.info("Обращение к /weekly/excel/{}", id);
-
-
-
-
-
-
-
-
-
-
-
-
         return weatherService.getExcelWeeklyWeather(id);
     }
 

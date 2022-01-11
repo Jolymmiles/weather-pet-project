@@ -1,6 +1,5 @@
 package com.ru.weather.core.service.weather;
 
-import com.ru.weather.core.dto.WeatherDto;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import com.sun.istack.NotNull;
 import org.springframework.core.io.InputStreamResource;
