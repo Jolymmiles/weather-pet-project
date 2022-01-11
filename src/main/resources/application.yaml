@@ -3,8 +3,4 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/weather_api_database}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:1111}
-  jpa:
-    database-platform: org.hibirnate.dialect.PostgresSQLDialect
-    hibernate:
-      ddl-auto: create
 
