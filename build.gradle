@@ -48,7 +48,7 @@ flyway{
 	url = 'jdbc:postgresql://localhost:5432/weather_api_database'
 	user = 'postgres'
 	password = '1111'
-	schemas = 'public'
+	schemas = ["public"]
 }
 
 test {

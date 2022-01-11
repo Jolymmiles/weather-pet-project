@@ -1,0 +1,10 @@
+insert into cities (city_id, cityname, lat, lon) values (1, 'Moscow', 55.761665, 37.606667);
+insert into cities (city_id, cityname, lat, lon) values (2, 'Yalta', 44.5, 34.166668);
+insert into cities (city_id, cityname, lat, lon) values (3, 'Saint Petersburg', 59.894444, 30.264168);
+insert into cities (city_id, cityname, lat, lon) values (4, 'Novosibirsk', 55.041111, 82.934441);
+insert into cities (city_id, cityname, lat, lon) values (5, 'Yekaterinburg', 56.857498, 60.612499);
+insert into cities (city_id, cityname, lat, lon) values (6, 'Kazan', 55.788738,49.122139);
+insert into cities (city_id, cityname, lat, lon) values (7, 'Velikiy Novgorod', 58.51667, 31.283331);
+insert into cities (city_id, cityname, lat, lon) values (8, 'Chelyabinsk', 55.154442, 61.429722);
+insert into cities (city_id, cityname, lat, lon) values (9, 'Samara', 53.200001 ,50.150002);
+insert into cities (city_id, cityname, lat, lon) values (10, 'Rostov-na-Donu', 47.236389 ,39.71389);

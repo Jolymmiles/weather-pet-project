@@ -27,7 +27,7 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @ApiOperation(value = "Удаление города по Id")
+    @ApiOperation(value = "Удаление городы по Id")
     @DeleteMapping("/{id}/remove")
     public void removeWeather(@PathVariable Long id) {
         logger.info("Обращение к /{}/remove", id);
