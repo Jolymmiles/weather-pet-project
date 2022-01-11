@@ -20,11 +20,8 @@ repositories {
 	mavenCentral()
 }
 
-jar {
-	manifest {
-		attributes 'WeatherApplication': 'com/ru/weather/WeatherApplication.java'
-	}
-}
+
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
