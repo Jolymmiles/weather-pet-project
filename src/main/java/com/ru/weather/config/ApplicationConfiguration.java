@@ -23,9 +23,9 @@ public class ApplicationConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Weather")
-                .description("Сервис кэширования погоды")
+                .description("API погоды")
                 .license("License")
-                .licenseUrl("http://unilicense.org")
+                .licenseUrl("https://unlicense.org/")
                 .termsOfServiceUrl("")
                 .version(getClass().getPackage().getImplementationVersion())
                 .build();

@@ -4,15 +4,18 @@ import com.ru.weather.db.entity.city.CityEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "\"weather\"")
 public class WeatherEntity {
     @Id
@@ -22,7 +25,7 @@ public class WeatherEntity {
     private Long id;
     @Column(name = "date_of_weather")
     private LocalDate dateOfWeather;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "city_id")
     private CityEntity cityEntity;
     @Column(name = "temperature")
@@ -34,5 +37,4 @@ public class WeatherEntity {
     private LocalDate dateOfGettingData;
     @Column(name = "icon")
     private String icon;
-
 }

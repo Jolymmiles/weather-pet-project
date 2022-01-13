@@ -25,9 +25,7 @@ import java.io.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class WeatherServiceImpl implements WeatherService {
@@ -52,13 +50,12 @@ public class WeatherServiceImpl implements WeatherService {
         } else {
             Instant epochToLocalDate = date.atStartOfDay(ZoneId.systemDefault()).toInstant();
             Long unixTime = epochToLocalDate.toEpochMilli();
-            AllData allData = gettingDataFromOtherApi.getJsonFromOtherApi(cityEntity.getLatitude(), cityEntity.getLongitude(), unixTime);
+            AllData allData = gettingDataFromOtherApi.getJsonFromOtherApi(cityEntity.getLatitude(), cityEntity.getLongitude());
             Current today = allData.getCurrent();
             WeatherDto weatherDto = mapper.map(today, WeatherDto.class);
             StringBuffer buffer = new StringBuffer("http://openweathermap.org/img/wn/@2x.png");
             buffer.insert(33, weatherDto.getIcon());
             weatherDto.setIcon(buffer.toString());
-
             WeatherEntity weatherToDataBase = mapper.map(weatherDto, WeatherEntity.class);
             weatherToDataBase.setCityEntity(cityEntity);
             weatherToDataBase.setDateOfWeather(Instant.ofEpochSecond(today.getDt()).atZone(ZoneId.systemDefault()).toLocalDate());
@@ -164,10 +161,11 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     private byte[] makeExcelFile(List<WeatherEntity> weatherEntities) throws IOException {
-        InputStream is = new FileInputStream("C:\\Users\\Valentine\\Desktop\\Курсовая\\weather\\src\\TempFiles\\sample\\SampleWeatherExcel.xlsx");
+        InputStream is = new FileInputStream("src/TempFiles/sample/SampleWeatherExcel.xlsx");
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         Context context = new Context();
         context.putVar("weathers", weatherEntities);
+        context.putVar("dateOfWeather", 123);
         JxlsHelper.getInstance().processTemplate(is, os, context);
         return os.toByteArray();
 
@@ -176,7 +174,7 @@ public class WeatherServiceImpl implements WeatherService {
 
     //Стандартные запросы
     public void removeWeatherById(Long id) {
-        weatherEntityRepository.deleteById(id);
+        weatherEntityRepository.delete(getWeatherById(id));
     }
 
     public WeatherEntity addWeather(WeatherEntity weatherEntity) {
@@ -185,6 +183,7 @@ public class WeatherServiceImpl implements WeatherService {
 
     public WeatherEntity updateWeatherById(Long id, WeatherEntity weatherEntity) {
         weatherEntity.setId(id);
+        weatherEntity.setCityEntity(getWeatherById(id).getCityEntity());
         return weatherEntityRepository.save(weatherEntity);
 
     }

@@ -27,7 +27,7 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @ApiOperation(value = "Удаление городы по Id")
+    @ApiOperation(value = "Удаление города по Id")
     @DeleteMapping("/{id}/remove")
     public void removeWeather(@PathVariable Long id) {
         logger.info("Обращение к /{}/remove", id);
@@ -61,8 +61,8 @@ public class CityController {
 
 
     @ApiOperation(value = "Получение всех городов, включающих буквы или же без фильтра по наименованию")
-    @GetMapping("")
-    public List<CityDto> getAllCity(@ApiParam(value = "Фильтр по наименованию") @RequestParam(value = "cityNameLike", required = false) String cityNameLike) {
+    @GetMapping("/get-all")
+    public List<CityDto> getAllCity(@ApiParam(value = "Фильтр по наименованию") @RequestParam(value = "city-name-like", required = false) String cityNameLike) {
         logger.info("Обращение к /city?cityNameLike={}", cityNameLike);
         return mapper.mapAsList(cityService.getCityWithThisLetters(cityNameLike), CityDto.class);
 

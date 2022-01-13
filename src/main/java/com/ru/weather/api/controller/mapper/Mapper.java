@@ -17,7 +17,10 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(CityEntity.class, CityEntity.class).byDefault().register();
 
         factory.classMap(WeatherEntity.class, WeatherDto.class)
-                .fieldAToB("cityEntity", "cityDto")
+                .field("cityEntity.id", "cityDto.id")
+                .field("cityEntity.latitude", "cityDto.latitude")
+                .field("cityEntity.longitude", "cityDto.longitude")
+                .field("cityEntity.name", "cityDto.name")
                 .byDefault()
                 .register();
 

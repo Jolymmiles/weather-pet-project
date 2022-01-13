@@ -3,6 +3,7 @@ package com.ru.weather.db.entity.city;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "\"cities\"")
 public class CityEntity {
     @Id
@@ -23,6 +25,7 @@ public class CityEntity {
     private Double latitude;
     @Column(name = "lon")
     private Double longitude;
+
 
 
 }
