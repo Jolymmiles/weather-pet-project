@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -98,9 +99,14 @@ public class WeatherController {
 
     @ApiOperation(value = "Получение погоды по Id")
     @GetMapping("/{id}/get")
-    public WeatherDto getWeatherById(@ApiParam(value = "Id погоды", required = true) @PathVariable Long id) {
+    public ResponseEntity<WeatherDto> getWeatherById(@ApiParam(value = "Id погоды", required = true) @PathVariable Long id) {
         logger.info("Получение погоды по id /{}/get", id);
-        return mapper.map(weatherService.getWeatherById(id), WeatherDto.class);
+        try {
+            return new ResponseEntity<>(mapper.map(weatherService.getWeatherById(id), WeatherDto.class), HttpStatus.OK);
+        } catch (EntityNotFoundException e){
+            logger.info("Такие данные отсутствуют");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 
