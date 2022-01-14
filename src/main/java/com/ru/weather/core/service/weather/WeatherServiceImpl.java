@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.*;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -123,7 +124,7 @@ public class WeatherServiceImpl implements WeatherService {
         InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(outputStreamBytes));
         //TODO Перенести в контроллер
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", String.format("attachment; filename=%s", "TodayWeather"));
+        headers.add("Content-Disposition", String.format("attachment; filename=%s.xlsx", "TodayWeather"));
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
@@ -145,7 +146,7 @@ public class WeatherServiceImpl implements WeatherService {
         byte[] outputStreamBytes = makeExcelFile(weatherEntities);
         InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(outputStreamBytes));
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", String.format("attachment; filename=%s", "WeeklyWeather"));
+        headers.add("Content-Disposition", String.format("attachment; filename=%s.xlsx", "WeeklyWeather"));
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
@@ -174,7 +175,7 @@ public class WeatherServiceImpl implements WeatherService {
 
     //Стандартные запросы
     public void removeWeatherById(Long id) {
-        weatherEntityRepository.delete(getWeatherById(id));
+        weatherEntityRepository.deleteById(id);
     }
 
     public WeatherEntity addWeather(WeatherEntity weatherEntity) {
