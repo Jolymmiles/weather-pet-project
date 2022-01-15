@@ -11,7 +11,6 @@ import com.ru.weather.db.entity.city.CityEntityRepository;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import com.ru.weather.db.entity.weather.WeatherEntityRepository;
 import com.sun.media.sound.InvalidDataException;
-import com.sun.org.apache.xpath.internal.FoundIndex;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.slf4j.Logger;
@@ -23,12 +22,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class WeatherServiceImpl implements WeatherService {

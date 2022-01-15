@@ -34,7 +34,7 @@ public interface WeatherService {
      * @param letters letter for search
      * @return List WeatherEntity
      */
-    public List<WeatherEntity> getAllWeatherWithContainsLetter(String letters);
+    List<WeatherEntity> getAllWeatherWithContainsLetter(String letters);
 
     /**
      * Get excel file for today weather
@@ -64,7 +64,7 @@ public interface WeatherService {
     /**
      * @return List of WeatherEntity
      */
-    public List<WeatherEntity> getAllWeather();
+    List<WeatherEntity> getAllWeather();
 
     /**
      * Removing weather by id
