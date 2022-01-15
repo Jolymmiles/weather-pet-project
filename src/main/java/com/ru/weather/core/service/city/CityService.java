@@ -51,7 +51,7 @@ public interface CityService {
      * @param cityDto city data
      * @return CityEntity
      */
-    CityEntity updateCityById(@NotNull Long id, CityEntity cityDto);
+    CityEntity updateCityById(@NotNull Long id, CityEntity cityDto) throws NotFoundException;
 
     /**
      * Getting city by id

@@ -10,6 +10,8 @@ import com.ru.weather.db.entity.city.CityEntity;
 import com.ru.weather.db.entity.city.CityEntityRepository;
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import com.ru.weather.db.entity.weather.WeatherEntityRepository;
+import com.sun.media.sound.InvalidDataException;
+import com.sun.org.apache.xpath.internal.FoundIndex;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.slf4j.Logger;
@@ -178,7 +180,10 @@ public class WeatherServiceImpl implements WeatherService {
         weatherEntityRepository.deleteById(id);
     }
 
-    public WeatherEntity addWeather(WeatherEntity weatherEntity) {
+    public WeatherEntity addWeather(WeatherEntity weatherEntity) throws InvalidDataException {
+        if(getWeatherById(weatherEntity.getId()) != null){
+            throw new InvalidDataException();
+        }
         return weatherEntityRepository.save(weatherEntity);
     }
 
