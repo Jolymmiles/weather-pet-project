@@ -2,6 +2,7 @@ package com.ru.weather.core.service.weather;
 
 import com.ru.weather.db.entity.weather.WeatherEntity;
 import com.sun.istack.NotNull;
+import com.sun.media.sound.InvalidDataException;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 
@@ -78,7 +79,7 @@ public interface WeatherService {
      * @param weatherEntity weather data
      * @return WeatherEntity
      */
-    WeatherEntity addWeather(WeatherEntity weatherEntity);
+    WeatherEntity addWeather(WeatherEntity weatherEntity) throws InvalidDataException;
 
     /**
      * Updating weather by data with id
