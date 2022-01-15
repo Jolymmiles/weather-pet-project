@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -29,16 +30,31 @@ public class CityController {
 
     @ApiOperation(value = "Удаление города по Id")
     @DeleteMapping("/{id}/remove")
-    public void removeWeather(@PathVariable Long id) {
+    public ResponseEntity removeWeather(@PathVariable Long id) {
         logger.info("Обращение к /{}/remove", id);
-        cityService.removeCityById(id);
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try {
+            cityService.removeCityById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @ApiOperation(value = "Обновление города по Id")
     @PutMapping("/{id}/update")
-    public CityDto updateCityById(@ApiParam(value = "Id города", required = true) @PathVariable Long id, @RequestBody CityDto cityDto) {
+    public ResponseEntity<CityDto> updateCityById(@ApiParam(value = "Id города", required = true) @PathVariable Long id, @RequestBody CityDto cityDto) {
         logger.info("Обращение к /{}/update", id);
-        return mapper.map(cityService.updateCityById(id, mapper.map(cityDto, CityEntity.class)), CityDto.class);
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try {
+            return new ResponseEntity<>(mapper.map(cityService.updateCityById(id, mapper.map(cityDto, CityEntity.class)), CityDto.class), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @ApiOperation(value = "Добавление города")
@@ -46,7 +62,7 @@ public class CityController {
     public ResponseEntity<CityDto> addCity(@RequestBody CityDto cityDto) {
         logger.info("Обращение к /add");
         try {
-            return new ResponseEntity<CityDto>(mapper.map(cityService.addCity(mapper.map(cityDto, CityEntity.class)), CityDto.class), HttpStatus.OK);
+            return new ResponseEntity<>(mapper.map(cityService.addCity(mapper.map(cityDto, CityEntity.class)), CityDto.class), HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -54,17 +70,24 @@ public class CityController {
 
     @ApiOperation(value = "Получение города по Id")
     @GetMapping("/{id}/get")
-    public CityDto getCityById(@ApiParam(value = "Id города", required = true) @PathVariable Long id) {
+    public ResponseEntity<CityDto> getCityById(@ApiParam(value = "Id города", required = true) @PathVariable Long id) {
         logger.info("Обращение к /{}/get", id);
-        return mapper.map(cityService.getCityById(id), CityDto.class);
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try {
+            return new ResponseEntity<>(mapper.map(cityService.getCityById(id), CityDto.class), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 
     @ApiOperation(value = "Получение всех городов, включающих буквы или же без фильтра по наименованию")
     @GetMapping("/get-all")
-    public List<CityDto> getAllCity(@ApiParam(value = "Фильтр по наименованию") @RequestParam(value = "city-name-like", required = false) String cityNameLike) {
+    public ResponseEntity<List<CityDto>> getAllCity(@ApiParam(value = "Фильтр по наименованию") @RequestParam(value = "city-name-like", required = false) String cityNameLike) {
         logger.info("Обращение к /city?cityNameLike={}", cityNameLike);
-        return mapper.mapAsList(cityService.getCityWithThisLetters(cityNameLike), CityDto.class);
+        return new ResponseEntity<>(mapper.mapAsList(cityService.getCityWithThisLetters(cityNameLike), CityDto.class), HttpStatus.OK);
 
     }
 
