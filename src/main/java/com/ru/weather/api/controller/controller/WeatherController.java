@@ -45,7 +45,7 @@ public class WeatherController {
         try {
             return new ResponseEntity<>(mapper.map(weatherService.getWeatherByNow(id), WeatherDto.class), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
     }
@@ -60,7 +60,7 @@ public class WeatherController {
         try {
             return new ResponseEntity<>(mapper.mapAsList(weatherService.getWeeklyWeather(id), WeatherDto.class), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
     }
@@ -108,9 +108,9 @@ public class WeatherController {
         }
         try {
             weatherService.removeWeatherById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
     }
@@ -149,7 +149,7 @@ public class WeatherController {
         try {
             return new ResponseEntity<>(mapper.map(weatherService.getWeatherById(id), WeatherDto.class), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

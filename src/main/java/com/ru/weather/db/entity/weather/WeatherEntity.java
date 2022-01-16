@@ -26,6 +26,7 @@ public class WeatherEntity {
     private LocalDate dateOfWeather;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "city_id")
+    @ToString.Exclude
     private CityEntity cityEntity;
     @Column(name = "temperature")
     private Double temperature;
