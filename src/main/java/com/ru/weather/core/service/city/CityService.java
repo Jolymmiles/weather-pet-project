@@ -7,20 +7,6 @@ import javassist.NotFoundException;
 import java.util.List;
 
 public interface CityService {
-    /**
-     * Getting city by name
-     *
-     * @param cityName name of the city
-     * @return CityEntity
-     */
-    CityEntity getByCityName(String cityName);
-
-    /**
-     * Getting all city in db
-     *
-     * @return List of CityEntity
-     */
-    List<CityEntity> getAllCity();
 
     /**
      * Getting city
@@ -43,7 +29,7 @@ public interface CityService {
      * @param cityEntity city data
      * @return CityEntity
      */
-    CityEntity addCity(CityEntity cityEntity) throws NotFoundException;
+    CityEntity addCity(@NotNull CityEntity cityEntity) throws NotFoundException;
 
     /**
      * Updating city by id

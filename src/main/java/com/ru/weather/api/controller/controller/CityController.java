@@ -33,12 +33,15 @@ public class CityController {
     public ResponseEntity removeWeather(@PathVariable Long id) {
         logger.info("Обращение к /{}/remove", id);
         if (id == null) {
+            logger.info("Отсутствует ID");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
+            logger.info("Успешно удалено {}", id);
             cityService.removeCityById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (EntityNotFoundException e) {
+            logger.info("Сущность не найдена. Данные: {}", id);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
@@ -48,11 +51,14 @@ public class CityController {
     public ResponseEntity<CityDto> updateCityById(@ApiParam(value = "Id города", required = true) @PathVariable Long id, @RequestBody CityDto cityDto) {
         logger.info("Обращение к /{}/update", id);
         if (id == null) {
+            logger.info("Отсутствует ID");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
+            logger.info("Сущность обновлена");
             return new ResponseEntity<>(mapper.map(cityService.updateCityById(id, mapper.map(cityDto, CityEntity.class)), CityDto.class), HttpStatus.OK);
         } catch (Exception e) {
+            logger.info("Сущность не найдена");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -62,8 +68,10 @@ public class CityController {
     public ResponseEntity<CityDto> addCity(@RequestBody CityDto cityDto) {
         logger.info("Обращение к /add");
         try {
+            logger.info("Сущность добавлена. Данные: {}", cityDto);
             return new ResponseEntity<>(mapper.map(cityService.addCity(mapper.map(cityDto, CityEntity.class)), CityDto.class), HttpStatus.OK);
         } catch (NotFoundException e) {
+            logger.info("Сущность уже существует");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
@@ -73,15 +81,17 @@ public class CityController {
     public ResponseEntity<CityDto> getCityById(@ApiParam(value = "Id города", required = true) @PathVariable Long id) {
         logger.info("Обращение к /{}/get", id);
         if (id == null) {
+            logger.info("Отсутствует id:{}", id);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
+            logger.info("Сущность найдена и возвращена");
             return new ResponseEntity<>(mapper.map(cityService.getCityById(id), CityDto.class), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
+            logger.info("Сущность не найдена");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     @ApiOperation(value = "Получение всех городов, включающих буквы или же без фильтра по наименованию")
     @GetMapping("/get-all")

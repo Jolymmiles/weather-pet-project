@@ -6,7 +6,6 @@ import com.sun.media.sound.InvalidDataException;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -16,9 +15,9 @@ public interface WeatherService {
      * Getting weather data by date and city
      *
      * @param id city id of weather
-     * @return WeatherEntity
+     * @return List with WeatherEntity
      */
-    WeatherEntity getWeatherByNow(@NotNull Long id);
+    List<WeatherEntity> getWeatherByNow(@NotNull Long id);
 
     /**
      * Getting weekly weather
@@ -28,30 +27,6 @@ public interface WeatherService {
      */
     List<WeatherEntity> getWeeklyWeather(@NotNull Long id);
 
-    /**
-     * Getting all weather with included letters
-     *
-     * @param letters letter for search
-     * @return List WeatherEntity
-     */
-    List<WeatherEntity> getAllWeatherWithContainsLetter(String letters);
-
-    /**
-     * Get excel file for today weather
-     *
-     * @param id id
-     * @return link
-     */
-    ResponseEntity<InputStreamResource> getExcelFileForWeatherToday(Long id) throws IOException;
-
-    /**
-     * Getting excel for weekly weather
-     *
-     * @param id city id
-     * @return excel
-     * @throws FileNotFoundException
-     */
-    ResponseEntity<InputStreamResource> getExcelWeeklyWeather(Long id) throws IOException;
 
     /**
      * Getting all weather to the city
@@ -79,7 +54,7 @@ public interface WeatherService {
      * @param weatherEntity weather data
      * @return WeatherEntity
      */
-    WeatherEntity addWeather(WeatherEntity weatherEntity) throws InvalidDataException;
+    WeatherEntity addWeather(@NotNull WeatherEntity weatherEntity) throws InvalidDataException;
 
     /**
      * Updating weather by data with id
@@ -96,6 +71,15 @@ public interface WeatherService {
      * @return WeatherEntity
      */
     WeatherEntity getWeatherById(@NotNull Long id);
+
+    /**
+     * Getting Excel File
+     *
+     * @param id city id
+     * @param type of weather
+     *
+     */
+    ResponseEntity<InputStreamResource> getExcelFileOfWeatherWithType(@NotNull Long id, @NotNull String type) throws IOException;
 
 
 }
